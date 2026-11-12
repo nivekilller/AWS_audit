@@ -2,6 +2,7 @@
 __pycache__/
 .venv/
 .env
+commands.txt
 
 # AWS Credentials (just in case you hardcode them locally)
 .aws/
