@@ -1,6 +1,6 @@
 # Python / Virtual Environments
 __pycache__/
-venv/
+.venv/
 .env
 
 # AWS Credentials (just in case you hardcode them locally)
