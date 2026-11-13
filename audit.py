@@ -13,8 +13,8 @@ fake_creds = {
 
 def start_audit():
     # Initialize clients
-    s3 = boto3.client('s3', **fake_creds)
-    ec2 = boto3.client('ec2', **fake_creds)
+    s3 = boto3.client('s3', endpoint_url=endpoint, **fake_creds)
+    ec2 = boto3.client('ec2', endpoint_url=endpoint, **fake_creds)
 
     print("Starting Cloud Security Scan...")
     S3_scanner.check_s3_buckets(s3)
