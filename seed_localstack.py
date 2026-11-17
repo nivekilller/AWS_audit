@@ -1,5 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
+import json
 
 # LocalStack configuration constants
 LOCALSTACK_ENDPOINT = "http://localhost:4566"
@@ -60,8 +61,33 @@ def seed_security_groups():
 
 
 def seed_iam():
-    print("[*] Seeding IAM Policies... (Ready for future expansion)")
+    print("[*] Seeding IAM Policies...")
     iam = get_client('iam')
+    
+    policy_name = "InsecureAdminPolicy"
+    
+    # Define a dangerous wildcard policy
+    insecure_policy_document = {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": "*",
+                "Resource": "*"
+            }
+        ]
+    }
+    
+    try:
+        # Create the customer-managed policy in LocalStack
+        response = iam.create_policy(
+            PolicyName=policy_name,
+            PolicyDocument=json.dumps(insecure_policy_document),
+            Description="A dangerous administrative policy with wildcards for testing"
+        )
+        print(f"    [+] Created insecure IAM Policy: {policy_name}")
+    except ClientError as e:
+        print(f"    [!] Note on IAM policy seeding: {e.response['Error']['Message']}")
 
 
 def run_seeding():
