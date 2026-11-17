@@ -5,15 +5,10 @@ import json
 # LocalStack configuration constants
 LOCALSTACK_ENDPOINT = "http://localhost:4566"
 AWS_REGION = "us-east-1"
-FAKE_CREDENTIALS = {
-    "aws_access_key_id": "test",
-    "aws_secret_access_key": "test",
-    "region_name": AWS_REGION
-}
 
 def get_client(service_name):
     #Helper function to instantiate boto3 clients pointing to LocalStack."""
-    return boto3.client(service_name, endpoint_url=LOCALSTACK_ENDPOINT, **FAKE_CREDENTIALS)
+    return boto3.client(service_name)
 
 def seed_s3():
     #Creates mock S3 buckets with intentional misconfigurations for testing."""
