@@ -19,7 +19,15 @@ def seed_s3():
     try:
         s3.create_bucket(Bucket=bucket_name)
         print(f"    [+] Created mock bucket: {bucket_name}")
-        #Intentionally leaving out Public Access Block
+        s3.put_public_access_block(
+            Bucket=bucket_name,
+            PublicAccessBlockConfiguration={
+                'BlockPublicAcls': False,
+                'IgnorePublicAcls': False,
+                'BlockPublicPolicy': False,
+                'RestrictPublicBuckets': False
+            }
+        )
     except ClientError as e:
         print(f"    [!] Note on {bucket_name}: {e.response['Error']['Message']}")
 
